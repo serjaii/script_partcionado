@@ -2,12 +2,18 @@
 #Autores: Sergio Jiménez, Aleksandr Kosenko, Roberto Martín
 
 #Comprobamos que eres root
-echo "Comprobando que eres root..."  
-sleep 1  
-if [[ ! $UID -eq 0 ]]; then  
-   echo "Este script debe ejecutarse como root, vuelve a entrar como usuario."  
-   exit  
-fi  
+for i in $(seq 0 10 100)
+do
+sleep 0.1
+echo $i | dialog --gauge "Comprobando que eres root..." 0 0 0
+done
+clear
+if [[ ! $UID -eq 0 ]]; then
+dialog --msgbox "Este script debe ejecutarse como root, vuelve a entrar como us>
+" 0 0 
+exit
+clear
+fi
 
 while true; do  
 read -p "Indique el disco a particionar: " disco  
