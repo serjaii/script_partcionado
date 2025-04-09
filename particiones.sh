@@ -10,8 +10,8 @@ done
 clear
 if [[ ! $UID -eq 0 ]]; then
 dialog --msgbox "Este script debe ejecutarse como root, vuelve a entrar como superusuario" 0 0 
-exit
 clear
+exit
 fi
 
 while true; do  
