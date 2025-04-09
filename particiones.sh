@@ -9,8 +9,7 @@ echo $i | dialog --gauge "Comprobando que eres root..." 0 0 0
 done
 clear
 if [[ ! $UID -eq 0 ]]; then
-dialog --msgbox "Este script debe ejecutarse como root, vuelve a entrar como us>
-" 0 0 
+dialog --msgbox "Este script debe ejecutarse como root, vuelve a entrar como superusuario" 0 0 
 exit
 clear
 fi
