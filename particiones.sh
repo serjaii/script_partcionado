@@ -4,23 +4,35 @@
 
 #Comprobamos que eres root
 function soy_root(){
-for i in $(seq 0 10 100)
-do
-sleep 0.1
-echo $i | dialog --gauge "Comprobando que eres root..." 0 0 0
-done
+#for i in $(seq 0 10 100)
+#do
+sleep 1
+echo "Comprobando que eres root..."
+#echo $i | dialog --gauge "Comprobando que eres root..." 0 0 0
+#done
 clear
 if [[ ! $UID -eq 0 ]]; then
-dialog --msgbox "Este script debe ejecutarse como root, vuelve a entrar como usuario root
-" 0 0 
-clear
+ #dialog --msgbox "Este script debe ejecutarse como root, vuelve a entrar como usuario root" 0 0 
+ echo "Este script debe ejecutarse como root, vuelve a entrar como usuario root"
+#clear
 exit
+fi
+}
+
+#Verificamos paquetes instalados
+function ck_paquetes(){
+if apt policy gdisk 2> /dev/null | grep -q ninguno; then
+  sudo apt install gdisk
+fi
+
+if apt policy dialog 2> /dev/null | grep -q ninguno; then
+  sudo apt install dialog
 fi
 }
 
 function select_disk(){
 while true; do
-read -p "Indique el disco a particionar: " disco
+read -p "Indique el disco a particionar (Ej. sda): " disco
 
 #Verificamos si el disco existe
 if ! lsblk | grep -q $disco; then 
@@ -58,12 +70,18 @@ done
 }
 
 function ejecucion(){
-for particion in $(seq 1 $num_part); do sudo sgdisk --new=0:0:+$size /dev/$disco > /dev/null; done
+for particion in $(seq 1 $num_part); do 
+if ! sudo sgdisk --new=0:0:+$size /dev/$disco > /dev/null; then
+  echo -e "Error al crear la partición $partcion"
+  exit
+fi
+done
 echo "Particiones realizadas"
 exit
 }
 
 soy_root
+ck_paquetes
 select_disk
 num_particiones
 part_size
