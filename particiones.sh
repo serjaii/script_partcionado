@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 #Script particionado disco con sgdisk
 #Autores: Sergio Jiménez, Aleksandr Kosenko, Roberto Martín
 
