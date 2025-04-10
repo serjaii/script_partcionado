@@ -13,7 +13,7 @@ CYAN="\e[36m"
 WHITE="\e[37m"
 RESET="\e[0m"
 
-#--------------------------------------------------------------------
+#-------------Zona de funciones--------------------------------------
 
 #Comprobamos que eres root
 function soy_root(){
@@ -95,6 +95,7 @@ else
 fi
 }
 
+#-------------Zona ejecución-------------------------------------------
 
 soy_root
 ck_paquetes
