@@ -53,7 +53,7 @@ while true; do
 read -p "Introduzca el número de particiones a realizar: " num_part
 
 #Comprobamos el numero de particiones
-if [[ $num_part -gt 128 || $num_part -lt 1 || $num_part =~ [0-9]{3}]]; then
+if [[ $num_part -gt 128 || $num_part -lt 1 || $num_part =~ [0-9]{3} ]]; then
   echo "Número de particiones no válido"
 else 
   break
