@@ -72,7 +72,7 @@ done
 function ejecucion(){
 for particion in $(seq 1 $num_part); do 
 if ! sudo sgdisk --new=0:0:+$size /dev/$disco > /dev/null; then
-  echo -e "Error al crear la partición $partcion"
+  echo -e "Error al crear la partición $particion"
   exit
 fi
 done
