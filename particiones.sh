@@ -50,7 +50,7 @@ done
 #Definimos el número de particiones
 function num_particiones(){
 while true; do
-read -p "Introduzca las particiones a realizar: " num_part
+read -p "Introduzca el número de particiones a realizar: " num_part
 
 #Comprobamos el numero de particiones
 if [[ $num_part -gt 128 || $num_part -lt 1 || $num_part =~ [0-9]{3}]]; then
@@ -98,6 +98,7 @@ fi
 
 soy_root
 ck_paquetes
+echo -e "${RED}Está ralizando el particionado en estructura GPT.${RESET}\n"
 select_disk
 num_particiones
 part_size
