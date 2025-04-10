@@ -1,20 +1,27 @@
 #!/usr/bin/bash
-#Script particionado disco con sgdisk
+#Script particionado disco con sgdisk (GPT)
 #Autores: Sergio Jiménez, Aleksandr Kosenko, Roberto Martín
+
+#------------Variables colores----------------------------------------
+
+RED="\e[31m"
+GREEN="\e[32m"
+YELLOW="\e[33m"
+BLUE="\e[34m"
+MAGENTA="\e[35m"
+CYAN="\e[36m"
+WHITE="\e[37m"
+RESET="\e[0m"
+
+#--------------------------------------------------------------------
 
 #Comprobamos que eres root
 function soy_root(){
-#for i in $(seq 0 10 100)
-#do
 echo "Comprobando que eres root..."
 sleep 1
-#echo $i | dialog --gauge "Comprobando que eres root..." 0 0 0
-#done
 clear
 if [[ ! $UID -eq 0 ]]; then
- #dialog --msgbox "Este script debe ejecutarse como root, vuelve a entrar como usuario root" 0 0 
- echo "Este script debe ejecutarse como root, vuelve a entrar como usuario root"
-#clear
+ echo -e "${YELLOW}Este script debe ejecutarse como root, vuelve a entrar como usuario root${RESET}"
 exit
 fi
 }
@@ -24,12 +31,9 @@ function ck_paquetes(){
 if apt policy gdisk 2> /dev/null | grep -q ninguno; then
   sudo apt install gdisk
 fi
-
-if apt policy dialog 2> /dev/null | grep -q ninguno; then
-  sudo apt install dialog
-fi
 }
 
+#Seleccionamos disco
 function select_disk(){
 while true; do
 read -p "Indique el disco a particionar (Ej. sda): " disco
@@ -43,12 +47,13 @@ fi
 done
 }
 
+#Definimos el número de particiones
 function num_particiones(){
 while true; do
 read -p "Introduzca las particiones a realizar: " num_part
 
 #Comprobamos el numero de particiones
-if [[ $num_part -gt 128 || $num_part -lt 1 ]]; then
+if [[ $num_part -gt 128 || $num_part -lt 1 || $num_part =~ [0-9]{3}]]; then
   echo "Número de particiones no válido"
 else 
   break
@@ -56,6 +61,7 @@ fi
 done
 }
 
+#Elegimos el tamaño de las particiones
 function part_size(){
 while true; do
 read -p "Indique tamaño de la partción en megas (Ej. 512M): " size
@@ -69,16 +75,26 @@ fi
 done
 }
 
+#Realizamos el particionado
 function ejecucion(){
+exitos=0
+errores=0
+
 for particion in $(seq 1 $num_part); do 
 if ! sudo sgdisk --new=0:0:+$size /dev/$disco > /dev/null; then
-  echo -e "Error al crear la partición $particion"
-  exit
+  ((errores++))
+else
+  ((exitos++))
 fi
 done
-echo "Particiones realizadas"
-exit
+
+if [ $errores -eq 0 ]; then 
+  echo -e "${GREEN}Todas las particones se han realizado con éxito${RESET}"
+else
+  echo -e "${YELLOW}Solo se han realizado con éxtio $exitos particiones${RESET}"
+fi
 }
+
 
 soy_root
 ck_paquetes
