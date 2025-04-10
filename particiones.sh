@@ -6,8 +6,8 @@
 function soy_root(){
 #for i in $(seq 0 10 100)
 #do
-sleep 1
 echo "Comprobando que eres root..."
+sleep 1
 #echo $i | dialog --gauge "Comprobando que eres root..." 0 0 0
 #done
 clear
