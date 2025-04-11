@@ -17,3 +17,9 @@ Este script permite crear particiones en discos utilizando el esquema de partici
 - Sistema operativo basado en Linux.
 - Permisos de superusuario (`sudo`).
 - Herramienta `sgdisk` instalada (incluida en el paquete `gdisk`).
+
+## Desarrollado por:
+
+- Sergio Jiménez
+- Aleksandr Kosenko
+- Roberto Martín
