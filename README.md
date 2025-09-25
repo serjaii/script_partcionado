@@ -23,3 +23,8 @@ Este script permite crear particiones en discos utilizando el esquema de partici
 - Sergio Jiménez
 - Aleksandr Kosenko
 - Roberto Martín
+
+
+## Archivo editado por:
+
+- Sergio Jiménez
